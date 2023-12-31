@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #content {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #qrcode {
+      max-width: 100%;
+      user-drag: none;
+      user-select: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
+  <h1>QR Code Generator</h1>
+
+  <div id="content">
+      <label for="inputImage">Upload Image:</label>
+      <input type="file" id="inputImage" accept="image/*">
+      <br>
+      <br>
+    <label for="inputText">Enter Text or Link:</label>
+    <input type="text" id="inputText" placeholder="Enter text or link">
+    <button onclick="generateQRCode()">Generate QR Code</button>
+    <br>
+  </div>
+
+  <div id="qrcode"></div>
+
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script>
+    function generateQRCode() {
+      // Remove the previous QR code
+      document.getElementById('qrcode').innerHTML = '';
+
+      var inputText = document.getElementById('inputText').value;
+      var inputImage = document.getElementById('inputImage').files[0];
+
+      if (inputText || inputImage) {
+        var qrText = inputText || uploadImage(inputImage);
+        var qrcode = new QRCode(document.getElementById('qrcode'), {
+          text: qrText,
+          width: 256,
+          height: 256
+        });
+      } else {
+        alert("Please enter text or upload an image.");
+      }
+    }
+
+    function uploadImage(image) {
+      // Implement image upload logic to a server and return the absolute URL
+      // For demonstration purposes, just return a placeholder URL
+      return 'https://via.placeholder.com/150';
+    }
+  </script>
+</body>
+</html>
